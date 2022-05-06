@@ -1,0 +1,7 @@
+.vs/
+
+snake-curses
+
+*.d
+*.o
+
