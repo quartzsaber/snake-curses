@@ -33,6 +33,7 @@ private:
     int level;
     WINDOW* win;
     WINDOW* scoreWin;
+    WINDOW* missionWin;
     GameCell board[24][24];
 };
 

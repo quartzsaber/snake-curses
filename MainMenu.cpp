@@ -71,6 +71,6 @@ void MainMenu::render() {
 
 void MainMenu::hide() {
     for (int i=0; i<6; i++)
-        mvwprintw(win, 0, 0, "                      ");
+        mvwprintw(win, i, 0, "                      ");
     wrefresh(win);
 }
