@@ -12,25 +12,26 @@ MainMenu::MainMenu() : win(nullptr), selection(0) {
 }
 
 MainMenu::~MainMenu() {
+    hide();
     delwin(win);
 }
 
 void MainMenu::run() {
     while(true) {
         render();
+
         int ch = getch();
         if (ch == KEY_UP)
             selection = (selection + 3) % 2;
         if (ch == KEY_DOWN)
             selection = (selection + 1) % 2;
+        if (ch == 'q')
+            return;
         if (ch == ' ' || ch == '\n') {
             if(selection == 0) {
-                delwin(win);
-                /* run game */ {
-                    Game game;
-                    game.run();
-                }
-                win = newwin(6, 22, (LINES - 6) / 2, (COLS - 22) / 2);
+                hide();
+                Game game;
+                game.run();
             }
             else
                 return;
@@ -66,4 +67,10 @@ void MainMenu::render() {
 
     wrefresh(win);
     refresh();
+}
+
+void MainMenu::hide() {
+    for (int i=0; i<6; i++)
+        mvwprintw(win, 0, 0, "                      ");
+    wrefresh(win);
 }

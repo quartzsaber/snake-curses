@@ -9,6 +9,8 @@ CPP = $(wildcard *.cpp)
 OBJ = $(CPP:%.cpp=%.o)
 DEP = $(OBJ:%.o=%.d)
 
+all: $(BIN)
+
 run: $(BIN)
 	-./$(BIN)
 

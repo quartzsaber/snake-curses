@@ -14,6 +14,7 @@ public:
 
 private:
     void render();
+    void hide();
 
     WINDOW* win;
     int selection;
