@@ -64,14 +64,16 @@ void Game::clearBoard() {
 void Game::draw() {
     for (int i=0; i<24; i++) {
         for (int j=0; j<24; j++) {
-            short color;
+            short color = WHITE_ON_CYAN;
             switch(board[i][j]) {
                 case GameCell::EMPTY:
                     color = WHITE_ON_BLUE;
                     break;
                 case GameCell::WALL:
-                case GameCell::IMMUNE_WALL:
                     color = BLACK_ON_WHITE;
+                    break;
+                case GameCell::IMMUNE_WALL:
+                    color = WHITE_ON_CYAN;
                     break;
             }
             wattron(win, COLOR_PAIR(color));

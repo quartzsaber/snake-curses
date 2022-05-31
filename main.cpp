@@ -16,6 +16,7 @@ int main() {
     init_pair(WHITE_ON_MAGENTA, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(WHITE_ON_GREEN, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
+    init_pair(WHITE_ON_CYAN, COLOR_WHITE, COLOR_CYAN);
     refresh();
 
     /* main menu */ {
