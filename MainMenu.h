@@ -15,6 +15,7 @@ public:
 private:
     void render();
     void hide();
+    void paintLogo();
 
     WINDOW* win;
     int selection;

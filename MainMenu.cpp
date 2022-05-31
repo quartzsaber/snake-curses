@@ -65,12 +65,32 @@ void MainMenu::render() {
     mvwprintw(win, 4, 1, "        quit        ");
     wattroff(win, COLOR_PAIR(color));
 
+    paintLogo();
+
     wrefresh(win);
     refresh();
 }
 
 void MainMenu::hide() {
+    for (int i=0; i<LINES; i++)
+        for(int j=0; j<COLS; j++)
+            mvaddch(i, j, ' ');
+    refresh();
+
     for (int i=0; i<6; i++)
         mvwprintw(win, i, 0, "                      ");
     wrefresh(win);
+}
+
+void MainMenu::paintLogo() {
+    int x = (COLS - 60) / 2;
+    mvprintw(0, x, R"( @@@@@@\    @@\   @@\    @@@@@@\    @@\   @@\   @@@@@@@@\ )");
+	mvprintw(1, x, R"(@@  __@@\   @@@\  @@ |  @@  __@@\   @@ | @@  |  @@  _____|)");
+	mvprintw(2, x, R"(@@ /  \__|  @@@@\ @@ |  @@ /  @@ |  @@ |@@  /   @@ |      )");
+	mvprintw(3, x, R"(\@@@@@@\    @@ @@\@@ |  @@@@@@@@ |  @@@@@  /    @@@@@@\   )");
+	mvprintw(4, x, R"( \____@@\   @@ \@@@@ |  @@  __@@ |  @@  @@<     @@  ___|  )");
+	mvprintw(5, x, R"(@@\   @@ |  @@ |\@@@ |  @@ |  @@ |  @@ |\@@\    @@ |      )");
+	mvprintw(6, x, R"(\@@@@@@  |  @@ | \@@ |  @@ |  @@ |  @@ | \@@\   @@@@@@@@\ )");
+	mvprintw(7, x, R"( \______/   \__|  \__|  \__|  \__|  \__|  \__|  \________|)");
+    refresh();
 }
