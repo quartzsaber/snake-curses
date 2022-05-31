@@ -9,6 +9,9 @@ CPP = $(wildcard *.cpp)
 OBJ = $(CPP:%.cpp=%.o)
 DEP = $(OBJ:%.o=%.d)
 
+run: $(BIN)
+	-./$(BIN)
+
 $(BIN): $(OBJ)
 	$(CXX) $(LDFLAGS) $^ -o $@
 
