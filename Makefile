@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wfatal-errors -Wall $(shell pkg-config --cflags ncurses)
+CXXFLAGS = -std=c++11 -Wfatal-errors -Wall $(shell pkg-config --cflags ncurses)
 LDFLAGS = $(shell pkg-config --libs ncurses)
 
 BIN = snake-curses
