@@ -32,7 +32,11 @@ Game::~Game() {
 
 void Game::run() {
     draw();
-    getch();
+    while (true) {
+        int x = getch();
+        if (x != ERR)
+            break;
+    }
 }
 
 void Game::clearBoard() {

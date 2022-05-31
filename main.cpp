@@ -10,6 +10,7 @@ int main() {
     raw();
     keypad(stdscr, true);
     noecho();
+    nodelay(stdscr, true);
     start_color();
     curs_set(0);
     init_color(COLOR_CYAN, 500, 500, 500);
