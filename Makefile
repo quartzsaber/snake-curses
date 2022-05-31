@@ -13,7 +13,7 @@ run: $(BIN)
 	-./$(BIN)
 
 $(BIN): $(OBJ)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX) $^ -o $@ $(LDFLAGS) 
 
 -include $(DEP)
 
