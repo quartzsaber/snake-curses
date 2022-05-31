@@ -11,6 +11,7 @@ int main() {
     keypad(stdscr, true);
     noecho();
     start_color();
+    curs_set(0);
     init_pair(WHITE_ON_BLUE, COLOR_WHITE, COLOR_BLUE);
     init_pair(WHITE_ON_MAGENTA, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(WHITE_ON_GREEN, COLOR_WHITE, COLOR_MAGENTA);
