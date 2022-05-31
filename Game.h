@@ -3,9 +3,13 @@
 
 #include <memory>
 
+#include <vector>
+
 #include <ncurses.h>
 
 #include "ScoreBoard.h"
+
+#include "item.h"
 
 enum class GameCell : unsigned char {
 	UNKNOWN = 0,
@@ -31,11 +35,13 @@ public:
 private:
     void clearBoard();
     void draw();
-
-    int level;
+	void itemSpawn();
+    int itemcnt;
+	int level;
     std::shared_ptr<ScoreBoard> scoreBoard;
     WINDOW* win;
     GameCell board[24][24];
+    std::vector<std::shared_ptr<Item>> items;
 };
 
 #endif

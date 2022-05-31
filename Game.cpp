@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "item.h"
 
 #include "colors.h"
 #include "map.h"
@@ -21,6 +22,7 @@ Game::~Game() {
 }
 
 void Game::run() {
+    itemcnt=0;
     draw();
     while (true) {
         int x = getch();
@@ -54,6 +56,32 @@ void Game::clearBoard() {
     }
 }
 
+void Game::itemSpawn(){
+    //TODO[info]: Need to implement rand function
+    int x = 24,y = 24;
+    if (board[x][y] == GameCell::EMPTY) {
+		int type = 3;
+		//TODO[INFO]: After the implementation of the tick function, After the item deswpawns, the itemcnt should be decreased.
+		//TODO[INFO]: After the implementation of the tick function, After every tick passed the lifespan should be decreased.
+				
+		if (type == 0) {
+			ItemPosion tmp;
+			tmp.pos={x,y};
+			tmp.lifespan=4;
+			items.push_back(std::make_shared<Item>(tmp));
+			itemcnt++;
+	
+		}
+		else if (type == 1) {
+			ItemGrowth tmp;
+			tmp.pos={x,y};
+			tmp.lifespan=4;
+			items.push_back(std::make_shared<Item>(tmp));
+			itemcnt++;
+		}
+    }
+	//TODO [INFO]: Gate will be Spawned separately.
+}
 void Game::draw() {
     for (int i=0; i<24; i++) {
         for (int j=0; j<24; j++) {
