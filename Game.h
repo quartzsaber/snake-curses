@@ -27,9 +27,12 @@ public:
 private:
     void clearBoard();
     void draw();
+    void scoreBoard();
+    void missionBoard();
 
     int level;
     WINDOW* win;
+    WINDOW* scoreWin;
     GameCell board[24][24];
 };
 

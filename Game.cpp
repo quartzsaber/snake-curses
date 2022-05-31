@@ -5,6 +5,7 @@
 Game::Game() : level(0) {
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
+    scoreWin = newwin(24, 48, (LINES - 24), (COLS - 48));
 }
 
 Game::~Game() {
@@ -62,6 +63,30 @@ void Game::draw() {
         }
     }
     
+    scoreBoard();
+    missionBoard();
+
     wrefresh(win);
+    wrefresh(scoreWin);
     refresh();
+}
+
+void Game::scoreBoard() {
+    mvwprintw(scoreWin, 1, 1, "---------------------------");
+    mvwprintw(scoreWin, 2, 1, "|Score Board              |");
+    mvwprintw(scoreWin, 3, 1, "| B:  %d                  |");
+    mvwprintw(scoreWin, 4, 1, "| +:  %d                   |");
+    mvwprintw(scoreWin, 5, 1, "| -:  %d                   |");
+    mvwprintw(scoreWin, 6, 1, "| G:  %d                   |");
+    mvwprintw(scoreWin, 7, 1, "---------------------------");
+}
+
+void Game::missionBoard() {
+    mvwprintw(scoreWin, 8, 1, "---------------------------");
+    mvwprintw(scoreWin, 9, 1, "|Mission                   |");
+    mvwprintw(scoreWin, 10, 1, "| B:  %d   (%d)             |");
+    mvwprintw(scoreWin, 11, 1, "| +:  %d   (%d)             |");
+    mvwprintw(scoreWin, 12, 1, "| -:  %d   (%d)             |");
+    mvwprintw(scoreWin, 13, 1, "| G:  %d   (%d)             |");
+    mvwprintw(scoreWin, 14, 1, "---------------------------");
 }
