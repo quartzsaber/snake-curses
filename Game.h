@@ -1,7 +1,11 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <memory>
+
 #include <ncurses.h>
+
+#include "ScoreBoard.h"
 
 enum class GameCell : unsigned char {
 	UNKNOWN = 0,
@@ -27,13 +31,10 @@ public:
 private:
     void clearBoard();
     void draw();
-    void scoreBoard();
-    void missionBoard();
 
     int level;
+    std::shared_ptr<ScoreBoard> scoreBoard;
     WINDOW* win;
-    WINDOW* scoreWin;
-    WINDOW* missionWin;
     GameCell board[24][24];
 };
 
