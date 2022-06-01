@@ -1,13 +1,18 @@
 #include "Game.h"
-#include "item.h"
+
+#include <chrono>
+#include <thread>
 
 #include "colors.h"
 #include "map.h"
 
-Game::Game() : level(0) {
+Game::Game() : level(0), random(std::random_device()()) {
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
     scoreBoard = std::make_shared<ScoreBoard>();
+    snake = std::make_shared<Snake>(this);
+
+    actors.push_back(snake);
 }
 
 Game::~Game() {
@@ -22,13 +27,34 @@ Game::~Game() {
 }
 
 void Game::run() {
-    itemcnt=0;
+    static const auto tickDuration = std::chrono::milliseconds(100);
+    bool quit = false;
+
     draw();
-    while (true) {
-        int x = getch();
-        if (x != ERR)
-            break;
+
+    while (!quit) {
+        std::this_thread::sleep_for(tickDuration);
+
+        while (true) {
+            int x = getch();
+            if (x == ERR)
+                break;
+            else if (x == 'q')
+                quit = true;
+            else if (x == KEY_UP)
+                snake->setDirection(Direction::UP);
+            else if (x == KEY_RIGHT)
+                snake->setDirection(Direction::RIGHT);
+            else if (x == KEY_DOWN)
+                snake->setDirection(Direction::DOWN);
+            else if (x == KEY_LEFT)
+                snake->setDirection(Direction::LEFT);
+        }
+        tick();
+        draw();
     }
+
+    //TODO: Add game over screen
 }
 
 void Game::clearBoard() {
@@ -56,36 +82,29 @@ void Game::clearBoard() {
     }
 }
 
-void Game::itemSpawn(){
-    //TODO[info]: Need to implement rand function
-    int x = 24,y = 24;
-    if (board[x][y] == GameCell::EMPTY) {
-		int type = 3;
-		//TODO[INFO]: After the implementation of the tick function, After the item deswpawns, the itemcnt should be decreased.
-		//TODO[INFO]: After the implementation of the tick function, After every tick passed the lifespan should be decreased.
-				
-		if (type == 0) {
-			ItemPosion tmp;
-			tmp.pos={x,y};
-			tmp.lifespan=4;
-			items.push_back(std::make_shared<Item>(tmp));
-			itemcnt++;
-	
-		}
-		else if (type == 1) {
-			ItemGrowth tmp;
-			tmp.pos={x,y};
-			tmp.lifespan=4;
-			items.push_back(std::make_shared<Item>(tmp));
-			itemcnt++;
-		}
+void Game::tick() {
+    std::vector<int> toRemove;
+    toRemove.reserve(actors.size());
+
+    for (int i=0; i<actors.size(); i++) {
+        if (!actors[i]->tick(this))
+            toRemove.push_back(i);
     }
-	//TODO [INFO]: Gate will be Spawned separately.
+
+    for (int i = toRemove.size() - 1; i >= 0; i--) {
+        actors.erase(actors.begin() + toRemove[i]);
+    }
 }
+
 void Game::draw() {
+    clearBoard();
+
+    for (auto& actor : actors)
+        actor->draw(this);
+
     for (int i=0; i<24; i++) {
         for (int j=0; j<24; j++) {
-            short color = WHITE_ON_BLUE;
+            short color;
             switch(board[i][j]) {
                 case GameCell::EMPTY:
                     color = WHITE_ON_BLUE;
@@ -96,6 +115,14 @@ void Game::draw() {
                 case GameCell::IMMUNE_WALL:
                     color = WHITE_ON_GRAY;
                     break;
+                case GameCell::SNAKE_HEAD:
+                    color = WHITE_ON_YELLOW;
+                    break;
+                case GameCell::SNAKE_TRAIL:
+                    color = WHITE_ON_ORANGE;
+                    break;
+                default:
+                    color = WHITE_ON_BLUE;
             }
             wattron(win, COLOR_PAIR(color));
             mvwprintw(win, i, j * 2, "  ");
@@ -107,4 +134,8 @@ void Game::draw() {
 
     wrefresh(win);
     refresh();
+}
+
+int Game::getRandomNumber() {
+    return static_cast<int>(random() & 0x7FFFFFFF);
 }

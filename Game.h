@@ -2,26 +2,15 @@
 #define GAME_H_
 
 #include <memory>
-
 #include <vector>
+#include <random>
 
 #include <ncurses.h>
 
 #include "ScoreBoard.h"
-
-#include "item.h"
-
-enum class GameCell : unsigned char {
-	UNKNOWN = 0,
-	GROWTH,
-	POISON,
-	PORTAL,
-    IMMUNE_WALL,
-	WALL,
-	SNAKE_HEAD,
-	SNAKE_TRAIL,
-	EMPTY
-};
+#include "GameCell.h"
+#include "IActor.h"
+#include "Snake.h"
 
 class Game {
 public:
@@ -32,16 +21,23 @@ public:
 
     void run();
 
+    int getCurrentTick() { return ticks; }
+    int getRandomNumber();
+    Board& getBoard() { return board; }
+
 private:
     void clearBoard();
     void draw();
-	void itemSpawn();
-    int itemcnt;
+    void tick();
+
 	int level;
-    std::shared_ptr<ScoreBoard> scoreBoard;
+    int ticks;
     WINDOW* win;
-    GameCell board[24][24];
-    std::vector<std::shared_ptr<Item>> items;
+    std::shared_ptr<Snake> snake;
+    std::shared_ptr<ScoreBoard> scoreBoard;
+    std::vector<std::shared_ptr<IActor>> actors;
+    std::mt19937 random;
+    Board board;
 };
 
 #endif

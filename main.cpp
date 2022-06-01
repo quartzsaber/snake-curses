@@ -11,14 +11,23 @@ int main() {
     keypad(stdscr, true);
     noecho();
     nodelay(stdscr, true);
-    start_color();
     curs_set(0);
-    init_color(COLOR_CYAN, 500, 500, 500);
+    start_color();
+    if (COLORS < MAX_COLORS || COLOR_PAIRS < MAX_COLOR_PAIRS) {
+        printw("Insufficient color supported by terminal.");
+        while (getch() != ERR);
+        return 0;
+    }
+    init_color(COLOR_GRAY, 500, 500, 500);
+    init_color(COLOR_YELLOW, 1000, 1000, 0);
+    init_color(COLOR_ORANGE, 1000, 500, 0);
     init_pair(WHITE_ON_BLUE, COLOR_WHITE, COLOR_BLUE);
     init_pair(WHITE_ON_MAGENTA, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(WHITE_ON_GREEN, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
-    init_pair(WHITE_ON_GRAY, COLOR_WHITE, COLOR_CYAN);
+    init_pair(WHITE_ON_GRAY, COLOR_WHITE, COLOR_GRAY);
+    init_pair(WHITE_ON_YELLOW, COLOR_WHITE, COLOR_YELLOW);
+    init_pair(WHITE_ON_ORANGE, COLOR_WHITE, COLOR_ORANGE);
     refresh();
 
     /* main menu */ {
