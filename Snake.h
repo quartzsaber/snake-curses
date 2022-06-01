@@ -16,9 +16,11 @@ public:
     bool tick(Game* game) override;
     void draw(Game* game) override;
 
+    bool isAlive() { return flagAlive; }
     void setDirection(Direction newDir) { dir = newDir; }
 
 private:
+    bool flagAlive;
     Coord pos;
     Direction dir;
     std::deque<Coord> trail;

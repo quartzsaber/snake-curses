@@ -52,6 +52,9 @@ void Game::run() {
         }
         tick();
         draw();
+
+        if (!snake->isAlive())
+            quit = true;
     }
 
     //TODO: Add game over screen

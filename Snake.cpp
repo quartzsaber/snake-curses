@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-Snake::Snake(Game* game) : dir(Direction::LEFT) {
+Snake::Snake(Game* game) : flagAlive(true), dir(Direction::LEFT) {
     pos.x = 13;
     pos.y = 13;
     for (int i=1; i<=3; i++)
@@ -29,8 +29,10 @@ bool Snake::tick(Game* game) {
     pos.y += movement.y;
     pos.x += movement.x;
 
-    if (board[pos.y][pos.x] != GameCell::EMPTY)
+    if (board[pos.y][pos.x] != GameCell::EMPTY) {
+        flagAlive = false;
         return false;
+    }
 
     return true;
 }
