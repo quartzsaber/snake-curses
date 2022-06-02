@@ -7,6 +7,7 @@
 #include "map.h"
 #include "ItemGrowth.h"
 #include "ItemPoison.h"
+#include "GameOver.h"
 
 Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_device()()) {
     clearBoard();
@@ -62,7 +63,8 @@ void Game::run() {
         if (!snake->isAlive())
             quit = true;
     }
-
+	GameOver menu;
+	menu.run();
     //TODO: Add game over screen
 }
 
