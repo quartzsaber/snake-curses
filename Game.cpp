@@ -27,7 +27,7 @@ Game::~Game() {
 }
 
 void Game::run() {
-    static const auto tickDuration = std::chrono::milliseconds(100);
+    static const auto tickDuration = std::chrono::milliseconds(300);
     bool quit = false;
 
     draw();
