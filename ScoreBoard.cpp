@@ -3,8 +3,8 @@
 #include <cstdlib>
 
 ScoreBoard::ScoreBoard() {
-    scoreWin = newwin(7, 24, (LINES - 7) / 3, (COLS - 24));
-    missionWin = newwin(7, 24, (LINES - 7) * 2 / 3, (COLS - 24));
+    scoreWin = newwin(7, 24, (LINES - 7) / 3, (COLS - 24) * 4 / 5);
+    missionWin = newwin(7, 24, (LINES - 7) * 2 / 3, (COLS - 24) * 4 / 5);
 
     if(!scoreWin || !missionWin)
         abort();
