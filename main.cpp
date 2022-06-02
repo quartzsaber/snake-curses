@@ -18,8 +18,14 @@ int main() {
         while (getch() != ERR);
         return 0;
     }
-    init_color(COLOR_GRAY, 500, 500, 500);
+    init_color(COLOR_BLACK, 0, 0, 0);
+    init_color(COLOR_RED, 1000, 0, 0);
+    init_color(COLOR_GREEN, 0, 1000, 0);
     init_color(COLOR_YELLOW, 1000, 1000, 0);
+    init_color(COLOR_BLUE, 0, 0, 1000);
+    init_color(COLOR_MAGENTA, 700, 0, 700);
+    init_color(COLOR_GRAY, 500, 500, 500);
+    init_color(COLOR_WHITE, 1000, 1000, 1000);
     init_color(COLOR_ORANGE, 1000, 500, 0);
     init_pair(WHITE_ON_BLUE, COLOR_WHITE, COLOR_BLUE);
     init_pair(WHITE_ON_MAGENTA, COLOR_WHITE, COLOR_MAGENTA);
