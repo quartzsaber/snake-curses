@@ -25,13 +25,28 @@ public:
     int getRandomNumber();
     Board& getBoard() { return board; }
 
+    template<class Fn>
+    void filterActor(const Fn& filter) {
+        std::vector<int> toRemove;
+        for (int i=0; i<actors.size(); i++) {
+            if (!filter(actors[i]))
+                toRemove.push_back(i);
+        }
+        for (int i=toRemove.size()-1; i >= 0; i--)
+            actors.erase(actors.begin() + toRemove[i]);
+    }
+
 private:
+    // Growth 와 Poison의 갯수를 샌다
+    int countItems();
+
     void clearBoard();
     void draw();
     void tick();
 
 	int level;
     int ticks;
+    int lastItemSpawnTick;
     WINDOW* win;
     std::shared_ptr<Snake> snake;
     std::shared_ptr<ScoreBoard> scoreBoard;

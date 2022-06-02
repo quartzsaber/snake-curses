@@ -5,8 +5,10 @@
 
 #include "colors.h"
 #include "map.h"
+#include "ItemGrowth.h"
+#include "ItemPoison.h"
 
-Game::Game() : level(0), random(std::random_device()()) {
+Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_device()()) {
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
     scoreBoard = std::make_shared<ScoreBoard>();
@@ -29,6 +31,10 @@ Game::~Game() {
 void Game::run() {
     static const auto tickDuration = std::chrono::milliseconds(300);
     bool quit = false;
+
+    level = 0;
+    ticks = 0;
+    lastItemSpawnTick = 0;
 
     draw();
 
@@ -60,6 +66,18 @@ void Game::run() {
     //TODO: Add game over screen
 }
 
+int Game::countItems() {
+    int cnt = 0;
+
+    for (auto& ptr : actors) {
+        if (dynamic_cast<ItemGrowth*>(ptr.get()) != nullptr ||
+            dynamic_cast<ItemPoison*>(ptr.get()) != nullptr)
+            cnt++;
+    }
+
+    return cnt;
+}
+
 void Game::clearBoard() {
     for (int i=0; i<24; i++) {
         for (int j=0; j<3; j++) {
@@ -86,6 +104,22 @@ void Game::clearBoard() {
 }
 
 void Game::tick() {
+    if (lastItemSpawnTick + 15 <= ticks && getRandomNumber() >= 8192) {
+        lastItemSpawnTick = ticks;
+        switch (getRandomNumber() % 2) {
+        case 0:
+            if (countItems() >= 3)
+                break;
+            actors.push_back(std::make_shared<ItemGrowth>(this));
+            break;
+        case 1:
+            if (countItems() >= 3)
+                break;
+            actors.push_back(std::make_shared<ItemPoison>(this));
+            break;
+        }
+    }
+
     std::vector<int> toRemove;
     toRemove.reserve(actors.size());
 
@@ -97,6 +131,8 @@ void Game::tick() {
     for (int i = toRemove.size() - 1; i >= 0; i--) {
         actors.erase(actors.begin() + toRemove[i]);
     }
+
+    ticks++;
 }
 
 void Game::draw() {
@@ -123,6 +159,12 @@ void Game::draw() {
                     break;
                 case GameCell::SNAKE_TRAIL:
                     color = WHITE_ON_ORANGE;
+                    break;
+                case GameCell::GROWTH:
+                    color = WHITE_ON_GREEN;
+                    break;
+                case GameCell::POISON:
+                    color = WHITE_ON_RED;
                     break;
                 default:
                     color = WHITE_ON_BLUE;
