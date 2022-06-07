@@ -42,15 +42,15 @@ void GameOver::run() {
 }
 
 void GameOver::render() {
-    wattron(win, COLOR_PAIR(WHITE_ON_BLUE));
+    wattron(win, COLOR_PAIR(WHITE_ON_GRAY));
     box(win, 0, 0);
     mvwprintw(win, 1, 1, "       YOU DIED      ");
     mvwprintw(win, 2, 1, "                     ");
-    wattroff(win, COLOR_PAIR(WHITE_ON_BLUE));
+    wattroff(win, COLOR_PAIR(WHITE_ON_GRAY));
 
     short color;
     if(selection != 0)
-        color = WHITE_ON_BLUE;
+        color = WHITE_ON_GRAY;
     else
         color = WHITE_ON_MAGENTA;
 
@@ -59,7 +59,7 @@ void GameOver::render() {
     wattroff(win, COLOR_PAIR(color));
 
     if(selection != 1)
-        color = WHITE_ON_BLUE;
+        color = WHITE_ON_GRAY;
     else
         color = WHITE_ON_MAGENTA;
 
