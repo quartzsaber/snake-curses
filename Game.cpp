@@ -70,6 +70,14 @@ void Game::run() {
     
 }
 
+std::shared_ptr<Snake> Game::getSnake() {
+    return std::dynamic_pointer_cast<Snake>(
+        findActor([](const std::shared_ptr<IActor> ptr) -> bool {
+            return dynamic_cast<Snake*>(ptr.get()) != nullptr;
+        })
+    );
+}
+
 int Game::countItems() {
     int cnt = 0;
 

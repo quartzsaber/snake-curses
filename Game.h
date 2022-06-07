@@ -45,6 +45,8 @@ public:
         return {};
     }
 
+    std::shared_ptr<Snake> getSnake();
+
 private:
     // Growth 와 Poison의 갯수를 샌다
     int countItems();
