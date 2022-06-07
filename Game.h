@@ -64,6 +64,7 @@ private:
 	// int level;
     int ticks;
     int lastItemSpawnTick;
+    int delayUptoTicks;
     WINDOW* win;
     std::shared_ptr<ScoreBoard> scoreBoard;
     std::vector<std::shared_ptr<IActor>> actors;

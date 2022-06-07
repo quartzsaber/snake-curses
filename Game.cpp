@@ -10,7 +10,7 @@
 #include "Gate.h"
 #include "GameOver.h"
 
-Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_device()()) {
+Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), delayUptoTicks(0), random(std::random_device()()) {
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
     scoreBoard = std::make_shared<ScoreBoard>(this);
@@ -36,6 +36,7 @@ void Game::run() {
     level = 0;
     ticks = 0;
     lastItemSpawnTick = 0;
+    delayUptoTicks = 5;
 
     draw();
 
@@ -73,6 +74,7 @@ void Game::advanceLevel() {
         level++;
         actors.clear();
         actors.push_back(std::make_shared<Snake>(this));
+        delayUptoTicks = ticks + 5;
     }
 }
 
@@ -137,6 +139,10 @@ void Game::tick() {
     if (snake == nullptr)
         return;
 
+    ticks++;
+    if (ticks < delayUptoTicks)
+        return;
+
     if (lastItemSpawnTick + 15 <= ticks && getRandomNumber() >= 8192) {
         lastItemSpawnTick = ticks;
         switch (getRandomNumber() % 3) {
@@ -171,8 +177,6 @@ void Game::tick() {
     for (int i = toRemove.size() - 1; i >= 0; i--) {
         actors.erase(actors.begin() + toRemove[i]);
     }
-
-    ticks++;
 }
 
 void Game::draw() {
