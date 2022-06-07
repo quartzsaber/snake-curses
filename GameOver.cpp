@@ -1,5 +1,4 @@
 #include "GameOver.h"
-
 #include <cstdlib>
 
 #include "colors.h"
@@ -94,8 +93,6 @@ void GameOver::paintLogo() {
     mvprintw(5, x, R"( ##|  \##\##/--##|##|\## /##|##/--/    ##|  ##|  \#### / ##/--/  ##/--##\)");
     mvprintw(6, x, R"( \###### /##|  ##|##| \_/ ##|#######\  \##### /   \## /  #######\##|  ##|)");
     mvprintw(7, x, R"(  \_____/ \_/  \_/\_/     \_/\______/   \____/     \_/   \______/\_/  \_/)");
-    mvprintw(8, x, R"(  )");
-    mvprintw(9, x, R"(                                  score: %d                              )", score);
-     	
+    	
 	refresh(); 
 }
