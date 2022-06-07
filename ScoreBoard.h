@@ -3,9 +3,11 @@
 
 #include <ncurses.h>
 
+class Game;
+
 class ScoreBoard {
 public:
-    ScoreBoard();
+    explicit ScoreBoard(Game *game);
     ScoreBoard(const ScoreBoard& copy) = delete;
     ScoreBoard(ScoreBoard&& move) = delete;
     ~ScoreBoard();
@@ -18,6 +20,10 @@ private:
 
     WINDOW* scoreWin;
     WINDOW* missionWin;
+
+    Game *game;
+
+    char success[4];
 };
 
 #endif

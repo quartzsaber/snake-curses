@@ -18,6 +18,12 @@ public:
 	void isDead() { if(trail.size()<2){ flagAlive = 0; } return;}
     bool isAlive() { return flagAlive; }
     void setDirection(Direction newDir) { dir = newDir; }
+
+    int getLength() { return trail.size() + 1; }
+
+    int countGrowth;
+    int countPoison;
+    int countGate;
 	
 private:
     bool flagAlive;

@@ -30,6 +30,7 @@ bool Snake::tick(Game* game) {
             ItemGrowth* ptr = dynamic_cast<ItemGrowth*>(p.get());
             return (ptr == nullptr) || (ptr->getPos().x != pos.x || ptr->getPos().y != pos.y);
         });
+        countGrowth++;
         break;
     case GameCell::POISON:
         trail.pop_back();
@@ -38,6 +39,7 @@ bool Snake::tick(Game* game) {
             ItemPoison* ptr = dynamic_cast<ItemPoison*>(p.get());
             return (ptr == nullptr) || (ptr->getPos().x != pos.x || ptr->getPos().y != pos.y);
         });
+        countPoison++;
         break;
     case GameCell::GATE: {
         trail.pop_back();
@@ -51,6 +53,7 @@ bool Snake::tick(Game* game) {
         int dst = (idx + 1) % 2;
         dir = p->fixDirection(idx, dir);
         pos = p->getPos(idx) + dir;
+        countGate++;
         break;
     }
     default:
