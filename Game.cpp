@@ -66,7 +66,8 @@ void Game::run() {
     }
 	GameOver menu;
 	//TODO[URGENT]: After Implementing score, the score will passed to the GameOver menu
-	menu.run(400);
+	menu.setScore(400);
+	menu.run();
     
 }
 

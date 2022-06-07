@@ -16,10 +16,10 @@ GameOver::~GameOver() {
     delwin(win);
 }
 
-void GameOver::run(int score) {
+void GameOver::run() {
 	hide();
 	while(true) {
-        render(score);
+        render();
 
         int ch = getch();
         if (ch == KEY_UP)
@@ -41,7 +41,7 @@ void GameOver::run(int score) {
     }
 }
 
-void GameOver::render(int score) {
+void GameOver::render() {
     wattron(win, COLOR_PAIR(WHITE_ON_BLUE));
     box(win, 0, 0);
     mvwprintw(win, 1, 1, "       YOU DIED      ");
@@ -67,7 +67,7 @@ void GameOver::render(int score) {
     mvwprintw(win, 4, 1, "   quit to mainmenu  ");
     wattroff(win, COLOR_PAIR(color));
 
-    paintLogo(score);
+    paintLogo();
 
     wrefresh(win);
     refresh();
@@ -84,7 +84,7 @@ void GameOver::hide() {
     wrefresh(win);
 }
 
-void GameOver::paintLogo(int score) {
+void GameOver::paintLogo() {
     int x = (COLS - 76) / 2;
 	mvprintw(0, x, R"(                                                                          )");
 	mvprintw(1, x, R"(                                                                          )");

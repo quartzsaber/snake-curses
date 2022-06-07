@@ -9,14 +9,16 @@ public:
     GameOver(const GameOver& copy) = delete;
     GameOver(GameOver&& move) = delete;
     ~GameOver();
-
-    void run(int score);
+	void setScore(int value){score = value;};
+	int getScore(){return score;};
+    void run();
 
 private:
-    void render(int score);
+    void render();
     void hide();
-    void paintLogo(int score);
-
+    void paintLogo();
+	
+	int score;
     WINDOW* win;
     int selection;
 };
