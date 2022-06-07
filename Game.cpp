@@ -13,7 +13,7 @@
 Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_device()()) {
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
-    scoreBoard = std::make_shared<ScoreBoard>();
+    scoreBoard = std::make_shared<ScoreBoard>(this);
     snake = std::make_shared<Snake>(this);
 
     actors.push_back(snake);

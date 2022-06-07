@@ -44,6 +44,8 @@ public:
         }
         return {};
     }
+    
+    int level;
 
     std::shared_ptr<Snake> getSnake();
 
@@ -58,7 +60,7 @@ private:
     void draw();
     void tick();
 
-	int level;
+	// int level;
     int ticks;
     int lastItemSpawnTick;
     WINDOW* win;
