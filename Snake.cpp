@@ -10,6 +10,10 @@ Snake::Snake(Game* game) : flagAlive(true), dir(Direction::LEFT) {
     pos.y = 13;
     for (int i=1; i<=3; i++)
         trail.push_back(Coord { pos.y, pos.x + i });
+    
+    countGrowth = 0;
+    countPoison = 0;
+    countGate = 0;
 }
 
 Snake::~Snake() {

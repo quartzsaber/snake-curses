@@ -14,9 +14,8 @@ Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_devi
     clearBoard();
     win = newwin(24, 48, (LINES - 24) / 2, (COLS - 48) / 3);
     scoreBoard = std::make_shared<ScoreBoard>(this);
-    snake = std::make_shared<Snake>(this);
 
-    actors.push_back(snake);
+    actors.push_back(std::make_shared<Snake>(this));
 }
 
 Game::~Game() {
@@ -41,6 +40,7 @@ void Game::run() {
     draw();
 
     while (!quit) {
+        std::shared_ptr<Snake> snake = getSnake();
         std::this_thread::sleep_for(tickDuration);
 
         while (true) {
@@ -66,7 +66,14 @@ void Game::run() {
     }
 	GameOver menu;
 	menu.run();
-    
+}
+
+void Game::advanceLevel() {
+    if (level < 5) {
+        level++;
+        actors.clear();
+        actors.push_back(std::make_shared<Snake>(this));
+    }
 }
 
 std::shared_ptr<Snake> Game::getSnake() {
@@ -126,6 +133,10 @@ void Game::clearBoard() {
 }
 
 void Game::tick() {
+    std::shared_ptr<Snake> snake = getSnake();
+    if (snake == nullptr)
+        return;
+
     if (lastItemSpawnTick + 15 <= ticks && getRandomNumber() >= 8192) {
         lastItemSpawnTick = ticks;
         switch (getRandomNumber() % 3) {

@@ -20,10 +20,13 @@ public:
     ~Game();
 
     void run();
+    void advanceLevel();
 
     int getCurrentTick() { return ticks; }
     int getRandomNumber();
     Board& getBoard() { return board; }
+
+    std::shared_ptr<Snake> getSnake();
 
     template<class Fn>
     void filterActor(const Fn& filter) {
@@ -47,8 +50,6 @@ public:
     
     int level;
 
-    std::shared_ptr<Snake> getSnake();
-
 private:
     // Growth 와 Poison의 갯수를 샌다
     int countItems();
@@ -64,7 +65,6 @@ private:
     int ticks;
     int lastItemSpawnTick;
     WINDOW* win;
-    std::shared_ptr<Snake> snake;
     std::shared_ptr<ScoreBoard> scoreBoard;
     std::vector<std::shared_ptr<IActor>> actors;
     std::mt19937 random;

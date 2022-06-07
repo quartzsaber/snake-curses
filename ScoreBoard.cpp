@@ -5,12 +5,12 @@
 #include <cstdlib>
 
 static const int mission[6][4] = {
-    {7, 3, 1, 1},
-    {10, 4, 2, 1},
-    {12, 5, 3, 2},
-    {14, 6, 4, 3},
-    {16, 7, 5, 4},
-    {20, 8, 6, 5},
+    {5, 1, 0, 0},
+    {7, 2, 2, 1},
+    {9, 3, 4, 2},
+    {11, 5, 6, 3},
+    {13, 8, 8, 4},
+    {15, 13, 10, 5},
 };
 
 ScoreBoard::ScoreBoard(Game *game) : game(game) {
@@ -49,14 +49,33 @@ void ScoreBoard::drawScore() {
     if(snake == nullptr) 
         return;
 
-    if(snake->getLength() == mission[game->level][0])
+    if(snake->getLength() >= mission[game->level][0])
         success[0] = 'v';
-    if(snake->countGrowth == mission[game->level][1])
+    else
+        success[0] = ' ';
+
+    if(snake->countGrowth >= mission[game->level][1])
         success[1] = 'v';
-    if(snake->countPoison == mission[game->level][2])
+    else
+        success[1] = ' ';
+        
+    if(snake->countPoison >= mission[game->level][2])
         success[2] = 'v';
-    if(snake->countGate == mission[game->level][3])
+    else
+        success[2] = ' ';
+        
+    if(snake->countGate >= mission[game->level][3])
         success[3] = 'v';
+    else
+        success[3] = ' ';
+    
+    int successCount = 0;
+    for (int i=0; i<4; i++)
+        if (success[i] == 'v')
+            successCount++;
+    
+    if (successCount == 4)
+        game->advanceLevel();
 
     for (int i=0; i<7; i++)
         for (int j=0; j<24; j++)
