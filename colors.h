@@ -13,6 +13,8 @@ enum : short {
     WHITE_ON_YELLOW,
     WHITE_ON_ORANGE,
     WHITE_ON_RED,
+    BLACK_ON_YELLOW,
+    BLACK_ON_ORANGE,
     MAX_COLOR_PAIRS
 };
 

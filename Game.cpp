@@ -221,6 +221,21 @@ void Game::draw() {
             wattroff(win, COLOR_PAIR(color));
         }
     }
+
+    if (ticks < delayUptoTicks) {
+        std::shared_ptr<Snake> snake = getSnake();
+        if (snake != nullptr) {
+            Coord c = snake->getPos();
+
+            wattron(win, COLOR_PAIR(BLACK_ON_YELLOW));
+            mvwprintw(win, c.y, c.x * 2, "Ge");
+            wattroff(win, COLOR_PAIR(BLACK_ON_YELLOW));
+
+            wattron(win, COLOR_PAIR(BLACK_ON_ORANGE));
+            mvwprintw(win, c.y, c.x *2 + 2, "t Ready!");
+            wattroff(win, COLOR_PAIR(BLACK_ON_ORANGE));
+        }
+    }
     
     scoreBoard->draw();
 

@@ -20,6 +20,7 @@ public:
     void setDirection(Direction newDir) { dir = newDir; }
 
     int getLength() { return trail.size() + 1; }
+    Coord getPos() { return pos; }
 
     int countGrowth;
     int countPoison;

@@ -35,6 +35,8 @@ int main() {
     init_pair(WHITE_ON_YELLOW, COLOR_WHITE, COLOR_YELLOW);
     init_pair(WHITE_ON_ORANGE, COLOR_WHITE, COLOR_ORANGE);
     init_pair(WHITE_ON_RED, COLOR_WHITE, COLOR_RED);
+    init_pair(BLACK_ON_YELLOW, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(BLACK_ON_ORANGE, COLOR_BLACK, COLOR_ORANGE);
     refresh();
 
     /* main menu */ {
