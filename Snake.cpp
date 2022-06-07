@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "ItemGrowth.h"
 #include "ItemPoison.h"
+#include "Gate.h"
 
 Snake::Snake(Game* game) : flagAlive(true), dir(Direction::LEFT) {
     pos.x = 13;
@@ -15,20 +16,10 @@ Snake::~Snake() {
 }
 
 bool Snake::tick(Game* game) {
-    static const Coord delta[4] = {
-        { -1,  0 },
-        {  0,  1 },
-        {  1,  0 },
-        {  0, -1 },
-    };
-
     Board& board = game->getBoard();
 
     trail.push_front(pos);
-
-    const Coord& movement = delta[static_cast<int>(dir)];
-    pos.y += movement.y;
-    pos.x += movement.x;
+    pos += dir;
 
     switch (board[pos.y][pos.x]) {
     case GameCell::EMPTY:
@@ -48,6 +39,20 @@ bool Snake::tick(Game* game) {
             return (ptr == nullptr) || (ptr->getPos().x != pos.x || ptr->getPos().y != pos.y);
         });
         break;
+    case GameCell::GATE: {
+        trail.pop_back();
+        std::shared_ptr<IActor> ptr = game->findActor([this](const std::shared_ptr<IActor>& ptr) -> bool {
+            return dynamic_cast<Gate*>(ptr.get()) != nullptr;
+        });
+        Gate* p = dynamic_cast<Gate*>(ptr.get());
+        if (p == nullptr)
+            break;
+        int idx = p->findIndex(pos);
+        int dst = (idx + 1) % 2;
+        dir = p->fixDirection(idx, dir);
+        pos = p->getPos(idx) + dir;
+        break;
+    }
     default:
         flagAlive = false;
     }

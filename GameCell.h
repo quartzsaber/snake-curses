@@ -5,7 +5,7 @@ enum class GameCell : unsigned char {
 	UNKNOWN = 0,
 	GROWTH,
 	POISON,
-	PORTAL,
+	GATE,
     IMMUNE_WALL,
 	WALL,
 	SNAKE_HEAD,

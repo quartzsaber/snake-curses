@@ -36,9 +36,21 @@ public:
             actors.erase(actors.begin() + toRemove[i]);
     }
 
+    template<class Fn>
+    std::shared_ptr<IActor> findActor(const Fn& predicate) {
+        for (int i=0; i<actors.size(); i++) {
+            if (predicate(actors[i]))
+                return actors[i];
+        }
+        return {};
+    }
+
 private:
     // Growth 와 Poison의 갯수를 샌다
     int countItems();
+
+    // Gate의 갯수를 샌다 (2쌍이 1개)
+    int countGate();
 
     void clearBoard();
     void draw();

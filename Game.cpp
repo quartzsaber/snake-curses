@@ -7,6 +7,7 @@
 #include "map.h"
 #include "ItemGrowth.h"
 #include "ItemPoison.h"
+#include "Gate.h"
 #include "GameOver.h"
 
 Game::Game() : level(0), ticks(0), lastItemSpawnTick(5), random(std::random_device()()) {
@@ -81,6 +82,17 @@ int Game::countItems() {
     return cnt;
 }
 
+int Game::countGate() {
+    int cnt = 0;
+
+    for (auto& ptr : actors) {
+        if (dynamic_cast<Gate*>(ptr.get()) != nullptr)
+            cnt++;
+    }
+
+    return cnt;
+}
+
 void Game::clearBoard() {
     for (int i=0; i<24; i++) {
         for (int j=0; j<3; j++) {
@@ -109,7 +121,7 @@ void Game::clearBoard() {
 void Game::tick() {
     if (lastItemSpawnTick + 15 <= ticks && getRandomNumber() >= 8192) {
         lastItemSpawnTick = ticks;
-        switch (getRandomNumber() % 2) {
+        switch (getRandomNumber() % 3) {
         case 0:
             if (countItems() >= 3)
                 break;
@@ -119,6 +131,11 @@ void Game::tick() {
             if (countItems() >= 3)
                 break;
             actors.push_back(std::make_shared<ItemPoison>(this));
+            break;
+        case 2:
+            if (countGate() >= 1)
+                break;
+            actors.push_back(std::make_shared<Gate>(this));
             break;
         }
     }
@@ -170,6 +187,9 @@ void Game::draw() {
                     break;
                 case GameCell::POISON:
                     color = WHITE_ON_RED;
+                    break;
+                case GameCell::GATE:
+                    color = WHITE_ON_MAGENTA;
                     break;
                 default:
                     color = WHITE_ON_BLUE;
