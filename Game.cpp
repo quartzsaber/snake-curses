@@ -64,8 +64,9 @@ void Game::run() {
             quit = true;
     }
 	GameOver menu;
-	menu.run();
-    //TODO: Add game over screen
+	//TODO[URGENT]: After Implementing score, the score will passed to the GameOver menu
+	menu.run(400);
+    
 }
 
 int Game::countItems() {
@@ -124,6 +125,8 @@ void Game::tick() {
 
     std::vector<int> toRemove;
     toRemove.reserve(actors.size());
+	
+	snake->isDead();
 
     for (int i=0; i<actors.size(); i++) {
         if (!actors[i]->tick(this))

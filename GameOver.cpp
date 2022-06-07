@@ -16,10 +16,10 @@ GameOver::~GameOver() {
     delwin(win);
 }
 
-void GameOver::run() {
+void GameOver::run(int score) {
 	hide();
 	while(true) {
-        render();
+        render(score);
 
         int ch = getch();
         if (ch == KEY_UP)
@@ -41,7 +41,7 @@ void GameOver::run() {
     }
 }
 
-void GameOver::render() {
+void GameOver::render(int score) {
     wattron(win, COLOR_PAIR(WHITE_ON_BLUE));
     box(win, 0, 0);
     mvwprintw(win, 1, 1, "       YOU DIED      ");
@@ -67,7 +67,7 @@ void GameOver::render() {
     mvwprintw(win, 4, 1, "   quit to mainmenu  ");
     wattroff(win, COLOR_PAIR(color));
 
-    paintLogo();
+    paintLogo(score);
 
     wrefresh(win);
     refresh();
@@ -84,7 +84,7 @@ void GameOver::hide() {
     wrefresh(win);
 }
 
-void GameOver::paintLogo() {
+void GameOver::paintLogo(int score) {
     int x = (COLS - 76) / 2;
 	mvprintw(0, x, R"(                                                                          )");
 	mvprintw(1, x, R"(                                                                          )");
@@ -94,5 +94,8 @@ void GameOver::paintLogo() {
     mvprintw(5, x, R"( ##|  \##\##/--##|##|\## /##|##/--/    ##|  ##|  \#### / ##/--/  ##/--##\)");
     mvprintw(6, x, R"( \###### /##|  ##|##| \_/ ##|#######\  \##### /   \## /  #######\##|  ##|)");
     mvprintw(7, x, R"(  \_____/ \_/  \_/\_/     \_/\______/   \____/     \_/   \______/\_/  \_/)");
-    refresh(); 
+    mvprintw(8, x, R"(  )");
+    mvprintw(9, x, R"(                                  score: %d                              )", score);
+     	
+	refresh(); 
 }

@@ -15,10 +15,10 @@ public:
 
     bool tick(Game* game) override;
     void draw(Game* game) override;
-
+	void isDead() { if(trail.size()<2){ flagAlive = 0; } return;}
     bool isAlive() { return flagAlive; }
     void setDirection(Direction newDir) { dir = newDir; }
-
+	
 private:
     bool flagAlive;
     Coord pos;

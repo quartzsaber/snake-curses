@@ -10,12 +10,12 @@ public:
     GameOver(GameOver&& move) = delete;
     ~GameOver();
 
-    void run();
+    void run(int score);
 
 private:
-    void render();
+    void render(int score);
     void hide();
-    void paintLogo();
+    void paintLogo(int score);
 
     WINDOW* win;
     int selection;

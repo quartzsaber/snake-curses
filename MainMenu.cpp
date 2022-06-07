@@ -84,8 +84,8 @@ void MainMenu::hide() {
 
 void MainMenu::paintLogo() {
     int x = (COLS - 60) / 2;
-	mvprintw(0, x, R"()");
-	mvprintw(1, x, R"()");
+	mvprintw(0, x, R"(  )");
+	mvprintw(1, x, R"(  )");
  	mvprintw(2, x, R"( @@@@@@\    @@\   @@\    @@@@@@\    @@\   @@\   @@@@@@@@\ )");
 	mvprintw(3, x, R"(@@  __@@\   @@@\  @@ |  @@  __@@\   @@ | @@  |  @@  _____|)");
 	mvprintw(4, x, R"(@@ /  \__|  @@@@\ @@ |  @@ /  @@ |  @@ |@@  /   @@ |      )");
